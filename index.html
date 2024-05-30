@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCTV Viewer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="/manifest.json">
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+  }
+  .container {
+    text-align: center;
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  #inputText {
+    margin-bottom: 15px;
+    padding: 12px;
+    width: 80%;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: #f0f0f0;
+  }
+  .radio-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0; /* ปรับความสูงของ radio button และ label */
+  }
+  .radio-group label {
+    margin-left: 5px;
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  button {
+    background-color: #e50914;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* ปรับ margin-top เพื่อชิดด้านบน */
+  }
+  button:hover {
+    background-color: #bf0410;
+  }
+  .icon {
+    font-size: 60px;
+    color: white;
+    margin-bottom: 0px;
+  }
+  h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <i class="fas fa-video icon"></i>
+    <h1>CCTV Viewer</h1>
+    <input type="text" id="inputText" placeholder="Enter IP..." oninput="updateURL()">
+    <br>
+    <input type="radio" id="frontCamera" name="camera" value="front" checked>
+    <label for="frontCamera">CCTV-SUB 1</label>
+    <input type="radio" id="rearCamera" name="camera" value="rear">
+    <label for="rearCamera">CCTV-SUB 2</label>
+    <br>
+    <button onclick="openURL()">OPEN</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    var linkUrl = '';
+
+    function updateURL() {
+      var inputText = document.getElementById('inputText').value;
+      var ipWithoutLastPart = inputText.substring(0, inputText.lastIndexOf('.'));
+      
+      var selectedCamera = document.querySelector('input[name="camera"]:checked').value;
+      if (selectedCamera === 'front') {
+        linkUrl = 'http://' + ipWithoutLastPart + '.108:8000';
+      } else if (selectedCamera === 'rear') {
+        linkUrl = 'http://' + ipWithoutLastPart + '.109:8001';
+      }
+    }
+
+    function openURL() {
+      if (linkUrl !== '') {
+        window.open(linkUrl, '_blank');
+      } else {
+        alert('Please enter text first!');
+      }
+    }
+
+    document.querySelectorAll('input[name="camera"]').forEach((elem) => {
+      elem.addEventListener('change', updateURL);
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }, function(err) {
+          console.log('Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+    <!-- powered by lowcode.io -->
+  <footer style="position: absolute; bottom: 10px; width: 100%; text-align: center;">
+    <p style="font-size: 14px; color: #888;">powered by <a href="https://ko-fi.com/lowcode" style="color: #888; text-decoration: none;">lowcode.io</a></p>
+  </footer>
+</body>
+</html>
