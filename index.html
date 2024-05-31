@@ -78,32 +78,6 @@
     margin-bottom: 20px;
     font-size: 28px;
   }
-  .install-message {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1e1e1e;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: #f0f0f0;
-    text-align: center;
-  }
-  .install-message button {
-    background-color: #e50914;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 14px;
-  }
-  .install-message button:hover {
-    background-color: #bf0410;
-  }
 </style>
 </head>
 <body>
@@ -156,42 +130,6 @@
 
     document.querySelectorAll('input[name="camera"]').forEach((elem) => {
       elem.addEventListener('change', updateURL);
-    });
-
-    let deferredPrompt;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      checkInstallStatus();
-    });
-
-    function checkInstallStatus() {
-      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-        console.log('App is already installed');
-      } else if (!localStorage.getItem('installDismissed')) {
-        document.getElementById('installMessage').style.display = 'flex';
-      }
-    }
-
-    document.getElementById('installButton').addEventListener('click', () => {
-      document.getElementById('installMessage').style.display = 'none';
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-          deferredPrompt = null;
-        });
-      }
-    });
-
-    document.getElementById('dismissButton').addEventListener('click', () => {
-      document.getElementById('installMessage').style.display = 'none';
-      localStorage.setItem('installDismissed', 'true');
     });
 
     if ('serviceWorker' in navigator) {
