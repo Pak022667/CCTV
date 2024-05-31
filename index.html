@@ -166,8 +166,16 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      document.getElementById('installContainer').style.display = 'block';
+      checkInstallStatus();
     });
+
+    function checkInstallStatus() {
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        console.log('App is already installed');
+      } else {
+        document.getElementById('installContainer').style.display = 'block';
+      }
+    }
 
     document.getElementById('installButton').addEventListener('click', () => {
       document.getElementById('installContainer').style.display = 'none';
