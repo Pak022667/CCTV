@@ -25,6 +25,10 @@
     color: #f0f0f0;
   }
   .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     background: #1e1e1e;
     padding: 30px;
@@ -104,14 +108,14 @@
     <i class="fas fa-video icon"></i>
     <h1>CCTV Viewer</h1>
     <input type="text" id="inputText" placeholder="Enter IP..." oninput="updateURL()">
-    <br>
-    <input type="radio" id="frontCamera" name="camera" value="front" checked>
-    <label for="frontCamera">CCTV-SUB 1</label>
-    <input type="radio" id="rearCamera" name="camera" value="rear">
-    <label for="rearCamera">CCTV-SUB 2</label>
-    <input type="radio" id="sub3Camera" name="camera" value="sub3">
-    <label for="sub3Camera">CCTV-SUB 3</label>
-    <br>
+    <div class="radio-group">
+      <input type="radio" id="frontCamera" name="camera" value="front" checked>
+      <label for="frontCamera">CCTV-SUB 1</label>
+      <input type="radio" id="rearCamera" name="camera" value="rear">
+      <label for="rearCamera">CCTV-SUB 2</label>
+      <input type="radio" id="sub3Camera" name="camera" value="sub3">
+      <label for="sub3Camera">CCTV-SUB 3</label>
+    </div>
     <button onclick="openURL()">OPEN</button>
     <div id="output"></div>
   </div>
@@ -142,7 +146,7 @@
       if (linkUrl !== '') {
         window.open(linkUrl, '_blank');
       } else {
-        alert('Please enter ip address!');
+        alert('Please enter IP address!');
       }
     }
 
