@@ -78,34 +78,30 @@
     margin-bottom: 20px;
     font-size: 28px;
   }
-  .install-container {
+  .install-message {
     display: none;
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     background: #1e1e1e;
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    color: #f0f0f0;
     text-align: center;
   }
-  .install-container button {
+  .install-message button {
     background-color: #e50914;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-	margin-top: 0px;
-	margin-bottom: 20px;
-    font-size: 16px;
+    margin-left: 10px;
+    font-size: 14px;
   }
-  .install-container button:hover {
+  .install-message button:hover {
     background-color: #bf0410;
   }
 </style>
@@ -127,8 +123,8 @@
     <div id="output"></div>
   </div>
 
-  <div class="install-container" id="installContainer">
-    <p style="color: #f0f0f0;">ติดตั้งแอพนี้บนอุปกรณ์ของคุณเพื่อประสบการณ์ที่ดียิ่งขึ้น</p>
+  <div class="install-message" id="installMessage">
+    <span>ติดตั้งแอพนี้บนอุปกรณ์ของคุณเพื่อประสบการณ์ที่ดียิ่งขึ้น</span>
     <button id="installButton">ติดตั้ง</button>
     <button id="dismissButton">ปิด</button>
   </div>
@@ -174,12 +170,12 @@
       if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
         console.log('App is already installed');
       } else if (!localStorage.getItem('installDismissed')) {
-        document.getElementById('installContainer').style.display = 'block';
+        document.getElementById('installMessage').style.display = 'flex';
       }
     }
 
     document.getElementById('installButton').addEventListener('click', () => {
-      document.getElementById('installContainer').style.display = 'none';
+      document.getElementById('installMessage').style.display = 'none';
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
@@ -194,7 +190,7 @@
     });
 
     document.getElementById('dismissButton').addEventListener('click', () => {
-      document.getElementById('installContainer').style.display = 'none';
+      document.getElementById('installMessage').style.display = 'none';
       localStorage.setItem('installDismissed', 'true');
     });
 
