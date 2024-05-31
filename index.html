@@ -99,9 +99,10 @@
 
   <script>
     var linkUrl = '';
+    var inputText = '';
 
     function updateURL() {
-      var inputText = document.getElementById('inputText').value;
+      inputText = document.getElementById('inputText').value;
       var ipWithoutLastPart = inputText.substring(0, inputText.lastIndexOf('.'));
       
       var selectedCamera = document.querySelector('input[name="camera"]:checked').value;
