@@ -1,25 +1,22 @@
-const cacheName = 'cctv-viewer-cache';
-const assets = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192x192.png',
-  '/icon-512x512.png',
-  '/css/styles.css',
-  '/js/script.js'
-];
-
-self.addEventListener('install', event => {
+self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(cacheName).then(cache => {
-      return cache.addAll(assets);
+    caches.open('cctv-cache').then(function(cache) {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/favicon-32x32.png',
+        '/favicon-16x16.png',
+        '/apple-touch-icon.png',
+        '/manifest.json',
+        '/service-worker.js'
+      ]);
     })
   );
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request).then(response => {
+    caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
     })
   );
