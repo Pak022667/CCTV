@@ -86,9 +86,9 @@
     <h1>CCTV Viewer</h1>
     <input type="text" id="inputText" placeholder="Enter IP..." oninput="updateURL()">
     <div class="radio-group">
-      <input type="radio" id="frontCamera" name="camera" value="front" checked>
+      <input type="radio" id="sub1Camera" name="camera" value="sub1" checked>
       <label for="frontCamera">CCTV-SUB 1</label>
-      <input type="radio" id="rearCamera" name="camera" value="rear">
+      <input type="radio" id="sub2Camera" name="camera" value="sub2">
       <label for="rearCamera">CCTV-SUB 2</label>
       <input type="radio" id="sub3Camera" name="camera" value="sub3">
       <label for="sub3Camera">CCTV-SUB 3</label>
@@ -105,9 +105,9 @@
       var ipWithoutLastPart = inputText.substring(0, inputText.lastIndexOf('.'));
       
       var selectedCamera = document.querySelector('input[name="camera"]:checked').value;
-      if (selectedCamera === 'front') {
+      if (selectedCamera === 'sub1') {
         linkUrl = 'http://' + ipWithoutLastPart + '.108:8000';
-      } else if (selectedCamera === 'rear') {
+      } else if (selectedCamera === 'sub2') {
         linkUrl = 'http://' + ipWithoutLastPart + '.109:8001';
       } else if (selectedCamera === 'sub3') {
         linkUrl = 'http://' + ipWithoutLastPart + '.110:8002';
