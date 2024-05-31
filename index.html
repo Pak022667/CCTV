@@ -99,25 +99,23 @@
 
   <script>
     var linkUrl = '';
-    var TextCheck = '';
 
     function updateURL() {
       var inputText = document.getElementById('inputText').value;
-      TextCheck = inputText;
       var ipWithoutLastPart = inputText.substring(0, inputText.lastIndexOf('.'));
       
       var selectedCamera = document.querySelector('input[name="camera"]:checked').value;
-      if (selectedCamera === 'sub1') {
+      if (selectedCamera === 'sub1' && inputText!== '') {
         linkUrl = 'http://' + ipWithoutLastPart + '.108:8000';
-      } else if (selectedCamera === 'sub2') {
+      } else if (selectedCamera === 'sub2' && inputText!== '') {
         linkUrl = 'http://' + ipWithoutLastPart + '.109:8001';
-      } else if (selectedCamera === 'sub3') {
+      } else if (selectedCamera === 'sub3' && inputText!== '') {
         linkUrl = 'http://' + ipWithoutLastPart + '.110:8002';
       }
     }
 
     function openURL() {
-      if (TextCheck !== '') {
+      if (linkUrl !== '') {
         window.open(linkUrl, '_blank');
       } else {
         alert('Please enter IP address!');
