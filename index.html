@@ -74,6 +74,29 @@
     margin-bottom: 20px;
     font-size: 28px;
   }
+  .install-container {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  .install-container button {
+    background-color: #e50914;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .install-container button:hover {
+    background-color: #bf0410;
+  }
 </style>
 </head>
 <body>
@@ -91,6 +114,11 @@
     <br>
     <button onclick="openURL()">OPEN</button>
     <div id="output"></div>
+  </div>
+
+  <div class="install-container" id="installContainer">
+    <p style="color: #f0f0f0;">ติดตั้งแอพนี้บนอุปกรณ์ของคุณเพื่อประสบการณ์ที่ดียิ่งขึ้น</p>
+    <button id="installButton">ติดตั้ง</button>
   </div>
 
   <script>
@@ -120,6 +148,29 @@
 
     document.querySelectorAll('input[name="camera"]').forEach((elem) => {
       elem.addEventListener('change', updateURL);
+    });
+
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installContainer').style.display = 'block';
+    });
+
+    document.getElementById('installButton').addEventListener('click', () => {
+      document.getElementById('installContainer').style.display = 'none';
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      }
     });
 
     if ('serviceWorker' in navigator) {
