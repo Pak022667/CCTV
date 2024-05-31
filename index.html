@@ -130,6 +130,7 @@
   <div class="install-container" id="installContainer">
     <p style="color: #f0f0f0;">ติดตั้งแอพนี้บนอุปกรณ์ของคุณเพื่อประสบการณ์ที่ดียิ่งขึ้น</p>
     <button id="installButton">ติดตั้ง</button>
+    <button id="dismissButton">ปิด</button>
   </div>
 
   <script>
@@ -172,7 +173,7 @@
     function checkInstallStatus() {
       if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
         console.log('App is already installed');
-      } else {
+      } else if (!localStorage.getItem('installDismissed')) {
         document.getElementById('installContainer').style.display = 'block';
       }
     }
@@ -190,6 +191,11 @@
           deferredPrompt = null;
         });
       }
+    });
+
+    document.getElementById('dismissButton').addEventListener('click', () => {
+      document.getElementById('installContainer').style.display = 'none';
+      localStorage.setItem('installDismissed', 'true');
     });
 
     if ('serviceWorker' in navigator) {
