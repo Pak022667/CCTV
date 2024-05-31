@@ -3,17 +3,16 @@
 <head>
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="manifest.json">
+<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CCTV Viewer</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <meta name="theme-color" content="#ffffff">
-<link rel="manifest" href="/manifest.json">
 <style>
   body {
     display: flex;
@@ -45,7 +44,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0; /* ปรับความสูงของ radio button และ label */
+    margin: 10px 0;
   }
   .radio-group label {
     margin-left: 5px;
@@ -61,7 +60,7 @@
     cursor: pointer;
     font-size: 18px;
     transition: background-color 0.3s ease;
-    margin-top: 20px; /* ปรับ margin-top เพื่อชิดด้านบน */
+    margin-top: 20px;
   }
   button:hover {
     background-color: #bf0410;
@@ -87,6 +86,8 @@
     <label for="frontCamera">CCTV-SUB 1</label>
     <input type="radio" id="rearCamera" name="camera" value="rear">
     <label for="rearCamera">CCTV-SUB 2</label>
+    <input type="radio" id="sub3Camera" name="camera" value="sub3">
+    <label for="sub3Camera">CCTV-SUB 3</label>
     <br>
     <button onclick="openURL()">OPEN</button>
     <div id="output"></div>
@@ -104,6 +105,8 @@
         linkUrl = 'http://' + ipWithoutLastPart + '.108:8000';
       } else if (selectedCamera === 'rear') {
         linkUrl = 'http://' + ipWithoutLastPart + '.109:8001';
+      } else if (selectedCamera === 'sub3') {
+        linkUrl = 'http://' + ipWithoutLastPart + '.110:8002';
       }
     }
 
@@ -111,7 +114,7 @@
       if (linkUrl !== '') {
         window.open(linkUrl, '_blank');
       } else {
-        alert('Please enter text first!');
+        alert('Please enter ip address!');
       }
     }
 
